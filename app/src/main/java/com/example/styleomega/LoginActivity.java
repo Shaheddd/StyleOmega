@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         LoginButton = (Button) findViewById(R.id.login_button);
         InputEmail = (EditText) findViewById(R.id.login_email_input);
         InputPassword = (EditText) findViewById(R.id.login_password_input);
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         AdminLink = (TextView) findViewById(R.id.admin_panel_link);
         NotAdminLink = (TextView) findViewById(R.id.not_admin_panel_link);
 
-        rememberMeCheckBox = (CheckBox) findViewById(R.id.remember_me_chkb);
+        rememberMeCheckBox = (CheckBox) findViewById(R.id.remember);
         Paper.init(this);
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -81,11 +82,16 @@ public class LoginActivity extends AppCompatActivity {
         String email = InputEmail.getText().toString();
         String password = InputPassword.getText().toString();
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email))
+        {
             Toast.makeText(this, "Enter Your Email Address", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(password)) {
+        }
+        else if (TextUtils.isEmpty(password))
+        {
             Toast.makeText(this, "Enter Your Password", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else
+            {
             loadingBar.setTitle("Login Account");
             loadingBar.setMessage("Checking Credentials, Please Wait");
             loadingBar.setCanceledOnTouchOutside(false);
@@ -97,10 +103,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void AllowAccessToAccount(final String email, final String password) {
 
-        if (rememberMeCheckBox.isChecked()) {
+        if (rememberMeCheckBox.isChecked())
+        {
             Paper.book().write(Prevalent.UserEmailKey, email);
             Paper.book().write(Prevalent.UserPasswordKey, password);
-
+        }
 
             final DatabaseReference RootRef;
             RootRef = FirebaseDatabase.getInstance().getReference();
@@ -117,9 +124,12 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "Logged In Successfully ", Toast.LENGTH_SHORT).show();
                                     loadingBar.dismiss();
 
-                                    Intent intent = new Intent(LoginActivity.this, AdminProductActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
                                     startActivity(intent);
-                                } else if (DatabaseName.equals("Users")) {
+
+                                }
+
+                                else if (DatabaseName.equals("Users")) {
                                     Toast.makeText(LoginActivity.this, "Logged In Successfully ", Toast.LENGTH_SHORT).show();
                                     loadingBar.dismiss();
 
@@ -127,7 +137,8 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             }
-                            else {
+                            else
+                                {
 
                                 loadingBar.dismiss();
                                 Toast.makeText(LoginActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
@@ -148,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-        }
+
 
     }
 }
