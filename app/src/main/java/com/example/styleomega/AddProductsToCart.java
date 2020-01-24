@@ -35,7 +35,7 @@ public class AddProductsToCart extends AppCompatActivity
     private ImageView productImage;
     private ElegantNumberButton numberButton;
     private TextView productName, productDescription, productPrice;
-    private String productIdentity = "";
+    private String productIdentity = "", State = "Normal";
 
 
 
@@ -61,8 +61,26 @@ public class AddProductsToCart extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                addingToTheCartList();
+                if(State.equals("Order Dispatched") || State.equals("Order Placed"))
+                {
+                    Toast.makeText(AddProductsToCart.this, "You Can Purchase More Products, Once Your Order Has Been Confirmed", Toast.LENGTH_LONG).show();
+                }
+
+                else
+                {
+                    addingToTheCartList();
+                }
             }
+        });
+    }
+
+            @Override
+            protected void onStart()
+                 {
+                    super.onStart();
+
+                    CheckStateOfOrder();
+                 }
 
             private void addingToTheCartList()
             {
@@ -119,8 +137,7 @@ public class AddProductsToCart extends AppCompatActivity
 
 
             }
-        });
-    }
+
 
     private void getProductDetails(String productIdentity)
     {
@@ -140,6 +157,42 @@ public class AddProductsToCart extends AppCompatActivity
                     productPrice.setText(products.getPrice());
                     Picasso.get().load(products.getImage()).into(productImage);
 
+                }
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+    }
+
+    private void CheckStateOfOrder()
+    {
+        DatabaseReference orderReference;
+        orderReference = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.loginUser.getEmail());
+        orderReference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    String shippingState = dataSnapshot.child("State").getValue().toString();
+
+                    if (shippingState.equals("Shipped"))
+                    {
+                        State = "Order Dispatched";
+
+                    }
+
+                    else if (shippingState.equals("Not Shipped"))
+                    {
+                        State = "Order Placed";
+                    }
                 }
             }
 

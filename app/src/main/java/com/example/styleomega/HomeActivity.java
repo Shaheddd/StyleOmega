@@ -59,6 +59,9 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Products");
+
+        Paper.init(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,8 +103,6 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Products");
 
         View headerView = navigationView.getHeaderView(0);
         TextView userName = headerView.findViewById(R.id.user_profile_name);
@@ -199,9 +200,10 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        else if (id == R.id.nav_orders)
+        else if (id == R.id.nav_search)
         {
-
+            Intent intent = new Intent(HomeActivity.this, SearchProductActivity.class);
+            startActivity(intent);
         }
 
         else if (id == R.id.nav_categories)
@@ -217,10 +219,16 @@ public class HomeActivity extends AppCompatActivity
 
         else if (id == R.id.nav_logout)
         {
-            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
+            Paper.book().destroy();
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         }
 
-        return false;
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
