@@ -1,4 +1,4 @@
-package com.example.styleomega;
+package com.example.styleomega.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,11 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.styleomega.HomeActivity;
 import com.example.styleomega.Model.Products;
 import com.example.styleomega.Prevalent.Prevalent;
+import com.example.styleomega.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 public class AddProductsToCart extends AppCompatActivity
 {
 
-    private Button addToCartButton;
+    private Button addToCartButton, ShareButton;
     private ImageView productImage;
     private ElegantNumberButton numberButton;
     private TextView productName, productDescription, productPrice;
@@ -48,6 +49,7 @@ public class AddProductsToCart extends AppCompatActivity
         productIdentity = getIntent().getStringExtra("ProductID");
 
         addToCartButton = (Button) findViewById(R.id.add_products_to_cart_button);
+        ShareButton = (Button) findViewById(R.id.share_product_button);
         numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
         productImage = (ImageView) findViewById(R.id.product_image_details);
         productName = (TextView) findViewById(R.id.product_name_details);
@@ -70,6 +72,25 @@ public class AddProductsToCart extends AppCompatActivity
                 {
                     addingToTheCartList();
                 }
+            }
+        });
+
+        ShareButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent shareProduct = new Intent();
+                shareProduct.setAction(Intent.ACTION_SEND);
+
+                String message = productName.getText().toString() + "\n" + productDescription.getText().toString()
+                        + "\n" + productPrice.getText().toString();
+
+                shareProduct.putExtra(Intent.EXTRA_TEXT, message);
+                shareProduct.setType("text/plain");
+
+                Intent sendProduct = Intent.createChooser(shareProduct, null);
+                startActivity(sendProduct);
             }
         });
     }

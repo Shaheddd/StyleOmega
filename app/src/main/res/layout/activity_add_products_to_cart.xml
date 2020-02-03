@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
 
-    tools:context=".AddProductsToCart">
+    tools:context=".Admin.AddProductsToCart">
 
     <ImageView
         android:id="@+id/product_image_details"
@@ -65,6 +65,7 @@
 
         </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
+
         <Button
             android:id="@+id/add_products_to_cart_button"
             android:layout_width="match_parent"
@@ -75,5 +76,16 @@
             android:text="Add To Cart"
             android:textColor="@android:color/white"
             android:textSize="18dp"/>
+
+    <Button
+        android:id="@+id/share_product_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:layout_margin="15dp"
+        android:text="Share Product"
+        android:layout_above="@id/add_products_to_cart_button"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"/>
 
 </RelativeLayout>

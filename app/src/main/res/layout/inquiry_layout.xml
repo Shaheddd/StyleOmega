@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <RelativeLayout
+      android:id="@+id/relative_display_inquiry"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimaryDark"
+      android:layout_alignParentTop="true">
+
+  </RelativeLayout>
+
+    <TextView
+        android:id="@+id/inquiry_text"
+        android:layout_width="256dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/relative_inquiries"/>
+
+
+    <TextView
+        android:id="@+id/inquiry_display_subject"
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:text="Subject"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:padding="14dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/inputs_edittext"
+        android:layout_below="@+id/inquiry_text"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/inquiry_display_message"
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:text="Message"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:padding="14dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/inputs_edittext"
+        android:layout_below="@+id/inquiry_display_subject"
+        android:layout_marginTop="10dp"/>
+
+
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.styleomega;
+package com.example.styleomega.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.styleomega.DisplayAdminUserProductsActivity;
 import com.example.styleomega.Model.AdminsOrders;
+import com.example.styleomega.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;

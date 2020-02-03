@@ -10,8 +10,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.styleomega.Admin.AdminCategoryActivity;
 import com.example.styleomega.Model.Users;
 import com.example.styleomega.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rey.material.widget.TextView;
 import com.rey.material.widget.CheckBox;
 
 import io.paperdb.Paper;
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText InputEmail, InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
-    private TextView AdminLink, NotAdminLink;
+    private TextView AdminLink, NotAdminLink, ForgetPasswordLink;
 
     private String DatabaseName = "Users";
     private CheckBox rememberMeCheckBox;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
         AdminLink = (TextView) findViewById(R.id.admin_panel_link);
         NotAdminLink = (TextView) findViewById(R.id.not_admin_panel_link);
+        ForgetPasswordLink = (TextView) findViewById(R.id.forget_password_link);
 
         rememberMeCheckBox = (CheckBox) findViewById(R.id.remember);
         Paper.init(this);
@@ -54,6 +56,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LoginUser();
+            }
+        });
+
+
+        ForgetPasswordLink.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                intent.putExtra("check", "login");
+                startActivity(intent);
             }
         });
 

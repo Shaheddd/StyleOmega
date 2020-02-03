@@ -4,33 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminNewOrderActivity">
+    tools:context=".ViewInquiryActivity">
 
     <RelativeLayout
-        android:id="@+id/relative_layout_admin_new_order"
+        android:id="@+id/relative_view_inquiry"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
         android:layout_alignParentTop="true">
 
         <TextView
-            android:id="@+id/total_price"
+            android:id="@+id/view_inquiry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Orders"
+            android:text="View Inquiries"
             android:textColor="@android:color/white"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textAlignment="center"
             android:layout_marginTop="10dp" />
 
 
     </RelativeLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/orders_list"
+        android:id="@+id/inquiry_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relative_layout_admin_new_order">
+        android:layout_below="@+id/relative_view_inquiry">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -1,13 +1,17 @@
-package com.example.styleomega;
+package com.example.styleomega.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.tv.TvContract;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.styleomega.HomeActivity;
+import com.example.styleomega.MainActivity;
+import com.example.styleomega.R;
+import com.example.styleomega.ViewInquiryActivity;
 
 public class AdminCategoryActivity extends AppCompatActivity
 {
@@ -16,7 +20,7 @@ public class AdminCategoryActivity extends AppCompatActivity
     private ImageView glasses, backpacks, caps, shoes;
     private ImageView headsets, laptops, watches, mobilePhones;
 
-    private Button LogoutButton, CheckOrdersButton;
+    private Button LogoutButton, CheckOrdersButton, MaintainProductsButton, ViewInquiries;
 
 
     @Override
@@ -27,6 +31,21 @@ public class AdminCategoryActivity extends AppCompatActivity
 
         LogoutButton = (Button) findViewById(R.id.admin_logout_button);
         CheckOrdersButton = (Button) findViewById(R.id.check_orders_button);
+        MaintainProductsButton = (Button) findViewById(R.id.maintain_products_button);
+        ViewInquiries = (Button) findViewById(R.id.maintain_inquiries);
+
+
+        MaintainProductsButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(AdminCategoryActivity.this, HomeActivity.class);
+                intent.putExtra("Admin", "Admin");
+                startActivity(intent);
+
+            }
+        });
 
         LogoutButton.setOnClickListener(new View.OnClickListener()
         {
@@ -47,6 +66,16 @@ public class AdminCategoryActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminNewOrderActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ViewInquiries.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(AdminCategoryActivity.this, ViewInquiryActivity.class);
                 startActivity(intent);
             }
         });

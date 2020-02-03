@@ -3,16 +3,15 @@ package com.example.styleomega;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.styleomega.Model.Cart;
+import com.example.styleomega.Admin.AddProductsToCart;
+import com.example.styleomega.Admin.AdminMaintainingProductsActivity;
 import com.example.styleomega.Model.Products;
 import com.example.styleomega.Prevalent.Prevalent;
 import com.example.styleomega.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +39,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
@@ -53,11 +51,23 @@ public class HomeActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
+    private String type = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null)
+        {
+            type = getIntent().getExtras().get("Admin").toString();
+        }
+
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Products");
 
@@ -72,8 +82,12 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-                startActivity(intent);
+                if (!type.equals("Admin")) //To make sure the Admin cannot change the Users Details
+                {
+                    Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -113,8 +127,11 @@ public class HomeActivity extends AppCompatActivity
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        userName.setText(Prevalent.loginUser.getUsername());
-        Picasso.get().load(Prevalent.loginUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
+       if (!type.equals("Admin"))
+       {
+           userName.setText(Prevalent.loginUser.getUsername());
+           Picasso.get().load(Prevalent.loginUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
+       }
 
     }
 
@@ -143,9 +160,19 @@ public class HomeActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        Intent intent = new Intent(HomeActivity.this, AddProductsToCart.class);
-                        intent.putExtra("ProductID", products.getProductID());
-                        startActivity(intent);
+                        if (type.equals("Admin"))
+                        {
+                            Intent intent = new Intent(HomeActivity.this, AdminMaintainingProductsActivity.class);
+                            intent.putExtra("ProductID", products.getProductID());
+                            startActivity(intent);
+                        }
+
+                        else
+                        {
+                            Intent intent = new Intent(HomeActivity.this, AddProductsToCart.class);
+                            intent.putExtra("ProductID", products.getProductID());
+                            startActivity(intent);
+                        }
                     }
                 });
             }
@@ -194,36 +221,58 @@ public class HomeActivity extends AppCompatActivity
     {
         int id = menuItem.getItemId();
 
+        // The !type is used to restrict the Admin to edit the Users details
+
         if (id == R.id.nav_cart)
         {
-            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin"))
+            {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+
         }
 
         else if (id == R.id.nav_search)
         {
-            Intent intent = new Intent(HomeActivity.this, SearchProductActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin"))
+            {
+                Intent intent = new Intent(HomeActivity.this, SearchProductActivity.class);
+                startActivity(intent);
+            }
+
         }
 
         else if (id == R.id.nav_categories)
         {
-
+            if (!type.equals("Admin"))
+            {
+                Intent intent = new Intent(HomeActivity.this, InquiryActivity.class);
+                startActivity(intent);
+            }
         }
 
         else if (id == R.id.nav_settings)
         {
-            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin"))
+            {
+                Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+
         }
 
         else if (id == R.id.nav_logout)
         {
-            Paper.book().destroy();
-            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            if (!type.equals("Admin"))
+            {
+                Paper.book().destroy();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+
         }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

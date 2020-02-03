@@ -18,16 +18,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rey.material.app.ThemeManager;
+
 
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity
 {
-
     private Button joinNowButton, loginButton;
     private ProgressDialog loadingBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void AllowAccess(final String email, final String password)
+    private void AllowAccess(final String email, final String password) //Login to the System
     {
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -93,7 +91,6 @@ public class MainActivity extends AppCompatActivity
                         {
                             Toast.makeText(MainActivity.this, "Logged In Successfully ", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
-
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             Prevalent.loginUser = usersData;
                             startActivity(intent);
